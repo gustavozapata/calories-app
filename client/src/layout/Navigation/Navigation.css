@@ -5,10 +5,11 @@
 }
 .Navigation nav {
   width: fit-content;
+  flex-basis: 50%;
 }
 .Navigation nav ul {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 0;
 }
 .Navigation ul li {
@@ -24,6 +25,13 @@
 .Navigation .active {
   text-decoration: underline;
 }
+.nav-account {
+  flex-basis: 25%;
+}
+.account-name {
+  font-size: 0.87em;
+  margin-right: 4px;
+}
 .logout {
   font-weight: 600;
   text-decoration: underline;
@@ -33,10 +41,11 @@
 }
 .logo {
   font-weight: 700;
-  border-bottom: 4px solid #2d54c5;
+  flex-basis: 25%;
   cursor: pointer;
 }
 .logo a {
   color: #000;
+  border-bottom: 4px solid #2d54c5;
   text-decoration: none;
 }

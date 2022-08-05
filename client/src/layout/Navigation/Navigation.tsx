@@ -4,7 +4,7 @@ import AppContext from "../../context";
 import "./Navigation.css";
 
 const Navigation: React.FC = () => {
-  const { handleLogout } = useContext(AppContext);
+  const { user, handleLogout } = useContext(AppContext);
 
   return (
     <div className="Navigation">
@@ -18,9 +18,14 @@ const Navigation: React.FC = () => {
           </li>
         </ul>
       </nav>
-      <p className="logout" onClick={() => handleLogout()}>
-        Logout
-      </p>
+      <div className="nav-account">
+        <span className="account-name">
+          {user.name} | {user.role}
+        </span>
+        <span className="logout" onClick={() => handleLogout()}>
+          Logout
+        </span>
+      </div>
     </div>
   );
 };

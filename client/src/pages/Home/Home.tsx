@@ -9,7 +9,7 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <h1>Home</h1>
+      <h1>Food entries</h1>
       <div>{user.role === "admin" ? <AdminHomePage /> : <UserHomePage />}</div>
     </div>
   );
