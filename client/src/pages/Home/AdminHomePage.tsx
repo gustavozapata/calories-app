@@ -3,11 +3,11 @@ import AppContext from "../../context";
 
 const AdminHomePage: React.FC = () => {
   const { user } = useContext(AppContext);
+  console.log("user", user);
 
   return (
     <div>
-      <h2>Admin</h2>
-      <p>Welcome home {user.name}</p>
+      <p>Add a food entry</p>
     </div>
   );
 };
