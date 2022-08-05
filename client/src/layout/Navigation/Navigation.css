@@ -1,0 +1,42 @@
+.Navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.Navigation nav {
+  width: fit-content;
+}
+.Navigation nav ul {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+}
+.Navigation ul li {
+  list-style: none;
+  margin: 0 15px;
+  padding: 0;
+}
+.Navigation li a {
+  text-decoration: none;
+  color: #2d54c5;
+  font-weight: 600;
+}
+.Navigation .active {
+  text-decoration: underline;
+}
+.logout {
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: rgb(72, 72, 72);
+}
+.logo {
+  font-weight: 700;
+  border-bottom: 4px solid #2d54c5;
+  cursor: pointer;
+}
+.logo a {
+  color: #000;
+  text-decoration: none;
+}
