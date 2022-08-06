@@ -4,6 +4,7 @@ import Input from "../../components/Input/Input";
 import Loading from "../../components/Loading/Loading";
 import AppContext from "../../context";
 import { isValidEmail, isValidPassword } from "../../utils/validation";
+import "./Login.css";
 
 export interface LoginProps {}
 
@@ -34,7 +35,7 @@ const Login: React.FC<LoginProps> = () => {
   };
 
   return (
-    <div>
+    <div className="Login">
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <Input

@@ -1,0 +1,9 @@
+.FoodForm {
+  width: 400px;
+}
+.FoodForm h1 {
+  margin-top: 5px;
+}
+.suggestions-wrapper {
+  position: relative;
+}

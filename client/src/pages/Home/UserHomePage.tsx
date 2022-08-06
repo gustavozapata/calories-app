@@ -1,19 +1,27 @@
 import React, { useState, useContext } from "react";
+import Button from "../../components/Button/Button";
 import FoodEntries from "../../components/FoodEntries/FoodEntries";
+import FoodForm from "../../components/FoodForm/FoodForm";
 import Check from "../../components/Icons/Check";
 import Close from "../../components/Icons/Close";
 import Pencil from "../../components/Icons/Pencil";
+import Modal from "../../components/Modal/Modal";
 import AppContext from "../../context";
 
 const UserHomePage: React.FC = () => {
   const [calorieLimit, setCalorieLimit] = useState("2100");
   const [isEditable, setIsEditable] = useState(false);
+  const [isAddFoodOpen, setIsAddFoodOpen] = useState(false);
   const { foodEntries } = useContext(AppContext);
 
   const handleCalorieLimit = (e: React.FormEvent<HTMLInputElement>) => {
     if (e.currentTarget.value.match(/^[0-9]*$/)) {
       setCalorieLimit(e.currentTarget.value);
     }
+  };
+
+  const handleCreateFood = () => {
+    setIsAddFoodOpen(false);
   };
 
   return (
@@ -37,7 +45,17 @@ const UserHomePage: React.FC = () => {
           </>
         )}
       </div>
+      <Button label="+ Add food" handleClick={() => setIsAddFoodOpen(true)} />
       <FoodEntries entries={foodEntries} />
+      {isAddFoodOpen && (
+        <Modal
+          confirm="Add"
+          onConfirm={handleCreateFood}
+          onCancel={() => setIsAddFoodOpen(false)}
+        >
+          <FoodForm title="Add food" />
+        </Modal>
+      )}
     </div>
   );
 };

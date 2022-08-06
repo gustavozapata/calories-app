@@ -1,16 +1,17 @@
 import React from "react";
+import "./Button.css";
 
 export interface ButtonProps {
   label: string;
   handleClick: () => void;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "cancel";
   disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
   label,
   handleClick,
-  variant,
+  variant = "primary",
   disabled,
 }) => {
   return (

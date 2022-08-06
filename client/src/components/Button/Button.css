@@ -1,0 +1,20 @@
+.Button {
+  background-color: #1155cb;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.Button:hover {
+  background-color: #2768d9;
+}
+.cancel {
+  background-color: #fff;
+  color: #696f8c;
+  border: 1px solid #d8dae5;
+}
+.cancel:hover {
+  background-color: #f7f7f7;
+}
