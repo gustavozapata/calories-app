@@ -1,3 +1,17 @@
-.calorie-limit p {
-  /* text-decoration: underline; */
+.calorie-limit span {
+  color: rgb(221, 37, 166);
+  margin: 0 5px;
+}
+.calorie-limit input {
+  width: auto;
+  width: 50px;
+  font-size: 1em;
+  margin-left: 3px;
+}
+.calorie-limit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: fit-content;
+  margin: 0 auto;
 }

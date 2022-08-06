@@ -1,0 +1,7 @@
+.no-entries {
+  color: grey;
+  border: 1px dashed grey;
+  padding: 20px;
+  width: fit-content;
+  margin: 20px auto;
+}

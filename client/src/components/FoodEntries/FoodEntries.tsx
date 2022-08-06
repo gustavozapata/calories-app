@@ -1,5 +1,6 @@
 import React from "react";
 import { Food } from "../../@types/food";
+import "./FoodEntries.css";
 
 export interface FoodEntriesProps {
   entries: Array<Food>;
@@ -16,7 +17,7 @@ const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
           </div>
         ))
       ) : (
-        <p>No food entries found</p>
+        <p className="no-entries">No food entries found</p>
       )}
     </div>
   );
