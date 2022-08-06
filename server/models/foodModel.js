@@ -6,7 +6,7 @@ const foodSchema = new Schema({
     type: String,
     required: true,
   },
-  taken: {
+  date: {
     type: Date,
     required: true,
   },
@@ -14,6 +14,15 @@ const foodSchema = new Schema({
     type: Number,
     required: true,
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "Users",
+  },
+});
+
+foodSchema.pre(/^find/, function (next) {
+  this.populate({ path: "user", select: "_id" });
+  next();
 });
 
 module.exports = Food = mongoose.model("Food", foodSchema);

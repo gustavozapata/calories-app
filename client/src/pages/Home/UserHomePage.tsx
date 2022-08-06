@@ -1,13 +1,17 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
+import FoodEntries from "../../components/FoodEntries/FoodEntries";
 import AppContext from "../../context";
 
 const UserHomePage: React.FC = () => {
-  const { user } = useContext(AppContext);
-  console.log("user", user);
+  const [calorieLimit] = useState(0);
+  const { foodEntries } = useContext(AppContext);
 
   return (
     <div>
-      <p>Add a food entry</p>
+      <FoodEntries entries={foodEntries} />
+      <div className="calorie-limit">
+        <p>{calorieLimit}</p>
+      </div>
     </div>
   );
 };

@@ -1,11 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import AppContext from "../../context";
 import Navigation from "../Navigation/Navigation";
 import "./PrivateLayout.css";
 
 const PrivateLayout: React.FC = () => {
-  const { isLoggedIn } = useContext(AppContext);
+  const { isLoggedIn, loadInitialData } = useContext(AppContext);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      loadInitialData();
+    }
+  }, [isLoggedIn]);
 
   return isLoggedIn ? (
     <div className="PrivateLayout">

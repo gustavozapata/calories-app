@@ -4,11 +4,9 @@ const authController = require("../controllers/authController.js");
 const router = express.Router();
 
 router
-  .route("/")
-  .get(foodController.getFoods)
-  .post(authController.restrictTo("admin"), foodController.createFood);
-router
   .route("/:id")
+  .get(foodController.getFoods)
+  .post(foodController.createFood)
   .patch(authController.restrictTo("admin"), foodController.editFood)
   .delete(authController.restrictTo("admin"), foodController.deleteFood);
 

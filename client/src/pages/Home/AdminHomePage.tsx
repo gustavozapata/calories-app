@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
+import FoodEntries from "../../components/FoodEntries/FoodEntries";
 import AppContext from "../../context";
 
 const AdminHomePage: React.FC = () => {
-  const { user } = useContext(AppContext);
-  console.log("user", user);
+  const { foodEntries } = useContext(AppContext);
 
   return (
     <div>
-      <p>Add a food entry</p>
+      <FoodEntries entries={foodEntries} />
     </div>
   );
 };
