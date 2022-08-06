@@ -1,3 +1,10 @@
+.calorie-limit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: fit-content;
+  margin: 0 auto 20px auto;
+}
 .calorie-limit span {
   color: rgb(221, 37, 166);
   margin: 0 5px;
@@ -7,11 +14,4 @@
   width: 50px;
   font-size: 1em;
   margin-left: 3px;
-}
-.calorie-limit {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: fit-content;
-  margin: 0 auto;
 }

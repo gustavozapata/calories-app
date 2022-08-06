@@ -7,6 +7,7 @@ import {
   isValidEmail,
   isValidPassword,
 } from "../../utils/validation";
+import "./Signup.css";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -40,7 +41,7 @@ const Signup = () => {
   };
 
   return (
-    <div>
+    <div className="Signup">
       <h1>Signup</h1>
       <form onSubmit={handleSubmit}>
         <Input
