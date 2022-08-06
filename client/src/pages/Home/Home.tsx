@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import AdminHomePage from "./AdminHomePage";
 import UserHomePage from "./UserHomePage";
-import { useContext } from "react";
 import AppContext from "../../context";
+import "./Home.css";
 
 const Home: React.FC = () => {
   const { user } = useContext(AppContext);
