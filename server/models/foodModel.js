@@ -21,7 +21,7 @@ const foodSchema = new Schema({
 });
 
 foodSchema.pre(/^find/, function (next) {
-  this.populate({ path: "user", select: "_id" });
+  this.populate({ path: "user", select: "_id name" });
   next();
 });
 

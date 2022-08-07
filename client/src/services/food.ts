@@ -20,3 +20,17 @@ export const apiAddFood = async (body: Food) => {
     throw e;
   }
 };
+
+export const apiUpdateCalorieLimit = async (
+  user: string,
+  calorieLimit: string
+) => {
+  try {
+    const food = await axiosProtect.patch(`${url}/users/${user}/calorieLimit`, {
+      calorieLimit: parseFloat(calorieLimit),
+    });
+    return food.data.data;
+  } catch (e) {
+    throw e;
+  }
+};

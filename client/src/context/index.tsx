@@ -3,14 +3,18 @@ import React, { createContext, useReducer } from "react";
 import { url } from "../services";
 import { User } from "../@types/user";
 import { Food } from "../@types/food";
-import { apiGetFoods } from "../services/food";
-// import axiosProtect from "../services";
+import {
+  apiAddFood,
+  apiGetFoods,
+  apiUpdateCalorieLimit,
+} from "../services/food";
 
 const user: User = {
   _id: "",
   name: "",
   email: "",
   role: "user",
+  calorieLimit: 0,
 };
 
 interface AppContextInterface {
@@ -26,6 +30,12 @@ interface AppContextInterface {
   ) => void;
   handleSignup: (body: object, callback: (l: boolean) => void) => void;
   handleLogout: () => void;
+  handleAddFood: (body: Food) => void;
+  updateCalorieLimit: (
+    user: string,
+    calorieLimit: string,
+    callback: (l: boolean) => void
+  ) => void;
   loadInitialData: () => void;
 }
 
@@ -38,6 +48,8 @@ const initialState: AppContextInterface = {
   handleLogin: () => {},
   handleSignup: () => {},
   handleLogout: () => {},
+  handleAddFood: () => {},
+  updateCalorieLimit: () => {},
   loadInitialData: () => {},
 };
 
@@ -52,7 +64,7 @@ const appReducer = (
 ) => {
   switch (action.type) {
     case "login":
-      const { _id, name, email, role } = action.payload.user;
+      const { _id, name, email, role, calorieLimit } = action.payload.user;
       localStorage.setItem("user", JSON.stringify(action.payload.user));
       localStorage.setItem("token", action.payload.token);
       localStorage.setItem("isLoggedIn", JSON.stringify(true));
@@ -65,6 +77,7 @@ const appReducer = (
           name,
           email,
           role,
+          calorieLimit,
         },
       };
     case "logout":
@@ -76,11 +89,25 @@ const appReducer = (
         isLoggedIn: false,
         token: "",
         user: user,
+        foodEntries: [],
       };
     case "setFoodEntries":
       return {
         ...state,
         foodEntries: action.payload,
+      };
+    case "addFoodEntry":
+      return {
+        ...state,
+        foodEntries: [...state.foodEntries, action.payload],
+      };
+    case "updateCalorieLimit":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          calorieLimit: action.payload,
+        },
       };
     case "setServerMessage":
       return {
@@ -157,6 +184,35 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const handleAddFood = async (body: Food) => {
+    try {
+      const newFood = await apiAddFood(body);
+      dispatch({
+        type: "addFoodEntry",
+        payload: newFood,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const updateCalorieLimit = async (
+    user: string,
+    calorieLimit: string,
+    callback: (l: boolean) => void
+  ) => {
+    try {
+      const updatedUser = await apiUpdateCalorieLimit(user, calorieLimit);
+      dispatch({
+        type: "updateCalorieLimit",
+        payload: updatedUser,
+      });
+      callback(true);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -164,6 +220,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         handleLogin,
         handleSignup,
         handleLogout,
+        handleAddFood,
+        updateCalorieLimit,
         loadInitialData,
       }}
     >

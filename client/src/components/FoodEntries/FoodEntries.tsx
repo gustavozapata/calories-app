@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Food } from "../../@types/food";
 import AppContext from "../../context";
+import Loading from "../Loading/Loading";
 import "./FoodEntries.css";
 
 export interface FoodEntriesProps {
@@ -28,7 +29,7 @@ const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
                 <td>{entry.name}</td>
                 <td>{entry.calories}</td>
                 <td>{new Date(entry.date).toLocaleString()}</td>
-                {user.role === "admin" && <th>{user.name}</th>}
+                {user.role === "admin" && <td>{entry.user?.name}</td>}
               </tr>
             ))}
           </tbody>

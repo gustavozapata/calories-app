@@ -3,7 +3,10 @@ export type Food = {
   name: string;
   calories: string;
   date: string;
-  user?: string;
+  user?: {
+    _id?: string;
+    name?: string;
+  };
 };
 
 export type NutritionixFood = {

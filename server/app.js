@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const authController = require("./controllers/authController.js");
 const authRouter = require("./routes/authRoutes");
+const userRouter = require("./routes/userRoutes");
 const foodRouter = require("./routes/foodRoutes");
 
 const app = express();
@@ -22,5 +23,6 @@ app.use("/api/v1/auth", authRouter);
 // private routes
 app.use(authController.protect);
 app.use("/api/v1/food", foodRouter);
+app.use("/api/v1/users", userRouter);
 
 module.exports = app;
