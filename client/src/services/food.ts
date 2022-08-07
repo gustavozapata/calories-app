@@ -12,7 +12,7 @@ export const apiGetFoods = async (id: string) => {
 
 export const apiAddFood = async (body: Food) => {
   try {
-    const food = await axiosProtect.post(`${url}/food/${body.user}`, {
+    const food = await axiosProtect.post(`${url}/food/${body.user?._id}`, {
       ...body,
     });
     return food.data.data;
