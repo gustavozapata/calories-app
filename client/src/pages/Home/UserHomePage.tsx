@@ -8,13 +8,15 @@ import Close from "../../components/Icons/Close";
 import Pencil from "../../components/Icons/Pencil";
 import Modal from "../../components/Modal/Modal";
 import AppContext from "../../context";
-import { apiAddFood } from "../../services/food";
 
 const UserHomePage: React.FC = () => {
-  const [calorieLimit, setCalorieLimit] = useState("2100");
+  const { foodEntries, user, handleAddFood, updateCalorieLimit } =
+    useContext(AppContext);
+  const [calorieLimit, setCalorieLimit] = useState(
+    user.calorieLimit.toString()
+  );
   const [isEditable, setIsEditable] = useState(false);
   const [isAddFoodOpen, setIsAddFoodOpen] = useState(false);
-  const { foodEntries } = useContext(AppContext);
 
   const handleCalorieLimit = (e: React.FormEvent<HTMLInputElement>) => {
     if (e.currentTarget.value.match(/^[0-9]*$/)) {
@@ -24,7 +26,7 @@ const UserHomePage: React.FC = () => {
 
   const handleCreateFood = (body: Food) => {
     setIsAddFoodOpen(false);
-    apiAddFood(body);
+    handleAddFood(body);
   };
 
   return (
@@ -39,7 +41,13 @@ const UserHomePage: React.FC = () => {
               onChange={handleCalorieLimit}
             />
             <Close handleClick={() => setIsEditable(false)} />
-            <Check handleClick={() => {}} />
+            <Check
+              handleClick={() =>
+                updateCalorieLimit(user._id, calorieLimit, () =>
+                  setIsEditable(false)
+                )
+              }
+            />
           </>
         ) : (
           <>

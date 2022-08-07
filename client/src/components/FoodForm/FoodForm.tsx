@@ -25,7 +25,7 @@ const FoodForm: React.FC<FoodFormProps> = ({
   const [calories, setCalories] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 16));
   const { user } = useContext(AppContext);
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const FoodForm: React.FC<FoodFormProps> = ({
         />
         <Input
           label="Date"
-          type="date"
+          type="datetime-local"
           value={date}
           handleChange={(e) => setDate(e.target.value)}
         />
@@ -93,7 +93,7 @@ const FoodForm: React.FC<FoodFormProps> = ({
         <Button
           label={confirm}
           handleClick={() =>
-            onConfirm({ name: food, calories, date, user: user._id })
+            onConfirm({ name: food, calories, date, user: { _id: user._id } })
           }
         />
       </div>
