@@ -4,7 +4,7 @@ const authController = require("../controllers/authController.js");
 const router = express.Router();
 
 router
-  .route("/:id")
+  .route("/:userId")
   .get(foodController.getFoods)
   .post(foodController.createFood)
   .patch(authController.restrictTo("admin"), foodController.editFood)

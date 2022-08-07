@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Food } from "../../@types/food";
 import Button from "../../components/Button/Button";
 import FoodEntries from "../../components/FoodEntries/FoodEntries";
 import FoodForm from "../../components/FoodForm/FoodForm";
@@ -7,6 +8,7 @@ import Close from "../../components/Icons/Close";
 import Pencil from "../../components/Icons/Pencil";
 import Modal from "../../components/Modal/Modal";
 import AppContext from "../../context";
+import { apiAddFood } from "../../services/food";
 
 const UserHomePage: React.FC = () => {
   const [calorieLimit, setCalorieLimit] = useState("2100");
@@ -20,8 +22,9 @@ const UserHomePage: React.FC = () => {
     }
   };
 
-  const handleCreateFood = () => {
+  const handleCreateFood = (body: Food) => {
     setIsAddFoodOpen(false);
+    apiAddFood(body);
   };
 
   return (
@@ -48,12 +51,13 @@ const UserHomePage: React.FC = () => {
       <Button label="+ Add food" handleClick={() => setIsAddFoodOpen(true)} />
       <FoodEntries entries={foodEntries} />
       {isAddFoodOpen && (
-        <Modal
-          confirm="Add"
-          onConfirm={handleCreateFood}
-          onCancel={() => setIsAddFoodOpen(false)}
-        >
-          <FoodForm title="Add food" />
+        <Modal>
+          <FoodForm
+            confirm="Add food"
+            onConfirm={handleCreateFood}
+            onCancel={() => setIsAddFoodOpen(false)}
+            title="New food entry"
+          />
         </Modal>
       )}
     </div>

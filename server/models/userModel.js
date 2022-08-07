@@ -10,6 +10,12 @@ const userSchema = new Schema({
     enum: ["admin", "user"],
     default: "user",
   },
+  calorieLimit: {
+    type: Number,
+    default: function () {
+      return this.role === "admin" ? undefined : 2100;
+    },
+  },
 });
 
 module.exports = User = mongoose.model("Users", userSchema);

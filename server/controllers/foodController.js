@@ -1,10 +1,15 @@
 const Food = require("../models/foodModel");
 
 exports.getFoods = async (req, res) => {
-  const food = await Food.find({ _id: req.params.id });
+  let foods = [];
+  if (req.user.role === "admin") {
+    foods = await Food.find();
+  } else {
+    foods = await Food.find({ user: req.params.userId });
+  }
   res.status(200).json({
     status: "success",
-    data: food,
+    data: foods,
   });
 };
 

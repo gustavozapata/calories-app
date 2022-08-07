@@ -11,14 +11,14 @@ const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
   const { user } = useContext(AppContext);
 
   return (
-    <div>
+    <div className="FoodEntries">
       {entries.length > 0 ? (
         <table>
           <thead>
             <tr>
               <th>Name</th>
               <th>Calories</th>
-              <th>Date</th>
+              <th>Date and time</th>
               {user.role === "admin" && <th>User</th>}
             </tr>
           </thead>
@@ -27,6 +27,7 @@ const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
               <tr key={entry._id}>
                 <td>{entry.name}</td>
                 <td>{entry.calories}</td>
+                <td>{new Date(entry.date).toLocaleString()}</td>
                 {user.role === "admin" && <th>{user.name}</th>}
               </tr>
             ))}

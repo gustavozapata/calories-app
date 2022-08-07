@@ -1,21 +1,32 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { NutritionixFood } from "../../@types/food";
+import React, { useContext, useEffect, useState } from "react";
+import { Food, NutritionixFood } from "../../@types/food";
+import AppContext from "../../context";
 import { nutritionix_url } from "../../services";
+import Button from "../Button/Button";
 import Input from "../Input/Input";
 import Suggestions from "../Suggestions/Suggestions";
 import "./FoodForm.css";
 
 interface FoodFormProps {
   title: string;
+  confirm: string;
+  onConfirm: (body: Food) => void;
+  onCancel: () => void;
 }
 
-const FoodForm: React.FC<FoodFormProps> = ({ title }) => {
+const FoodForm: React.FC<FoodFormProps> = ({
+  title,
+  confirm,
+  onConfirm,
+  onCancel,
+}) => {
   const [food, setFood] = useState("");
   const [calories, setCalories] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const { user } = useContext(AppContext);
 
   useEffect(() => {
     if (food !== "") {
@@ -77,6 +88,15 @@ const FoodForm: React.FC<FoodFormProps> = ({ title }) => {
           handleChange={(e) => setDate(e.target.value)}
         />
       </form>
+      <div className="popup-buttons">
+        <Button variant="cancel" label="Cancel" handleClick={onCancel} />
+        <Button
+          label={confirm}
+          handleClick={() =>
+            onConfirm({ name: food, calories, date, user: user._id })
+          }
+        />
+      </div>
     </div>
   );
 };
