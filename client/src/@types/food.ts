@@ -1,8 +1,9 @@
 export type Food = {
-  _id: string;
+  _id?: string;
   name: string;
-  calories: number;
+  calories: string;
   date: string;
+  user?: string;
 };
 
 export type NutritionixFood = {

@@ -56,6 +56,8 @@ exports.signup = async (req, res, next) => {
   newUser.password = hashedPassword;
   await newUser.save();
 
+  const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET);
+
   return res.status(201).json({
     status: "success",
     data: {
@@ -66,6 +68,7 @@ exports.signup = async (req, res, next) => {
         role: newUser.role,
       },
       isLogged: true,
+      token,
     },
     message: "",
   });
