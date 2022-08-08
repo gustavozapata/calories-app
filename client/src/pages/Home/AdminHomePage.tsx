@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import FoodEntries from "../../components/FoodEntries/FoodEntries";
+import ManageFoodEntries from "../../components/FoodEntries/ManageFoodEntries";
 import AppContext from "../../context";
 
 const AdminHomePage: React.FC = () => {
@@ -7,7 +7,7 @@ const AdminHomePage: React.FC = () => {
 
   return (
     <div>
-      <FoodEntries entries={foodEntries} />
+      <ManageFoodEntries entries={foodEntries} />
     </div>
   );
 };
