@@ -82,7 +82,19 @@ const ManageFoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
                 {group.entries.map((entry, index) => (
                   <tr key={entry._id}>
                     <td className="user-row">
-                      {index === 0 ? group.user : ""}
+                      {index === 0 && (
+                        <>
+                          {group.user}
+                          <span
+                            onClick={() => {
+                              setManageUserId(entry.user?._id as string);
+                              setManageAction("add");
+                            }}
+                          >
+                            Add food
+                          </span>
+                        </>
+                      )}
                     </td>
                     <td className="food-row">{entry.name}</td>
                     <td>{entry.calories}</td>
@@ -90,14 +102,6 @@ const ManageFoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
                       {new Date(entry.date).toLocaleString().slice(0, -3)}
                     </td>
                     <td className="actions-row">
-                      <span
-                        onClick={() => {
-                          setManageUserId(entry.user?._id as string);
-                          setManageAction("add");
-                        }}
-                      >
-                        Add
-                      </span>
                       <span
                         className="actions-edit"
                         onClick={() => {
