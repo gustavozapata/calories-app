@@ -49,7 +49,7 @@ const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
           </thead>
           <tbody>
             {userGroups.map((group) => (
-              <>
+              <React.Fragment key={group.user}>
                 {group.entries.map((entry, index) => (
                   <tr key={entry._id}>
                     <td className="user-row">
@@ -62,7 +62,7 @@ const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
                     </td>
                   </tr>
                 ))}
-              </>
+              </React.Fragment>
             ))}
           </tbody>
         </table>
