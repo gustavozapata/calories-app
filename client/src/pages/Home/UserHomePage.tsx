@@ -26,7 +26,7 @@ const UserHomePage: React.FC = () => {
 
   const handleCreateFood = (body: Food) => {
     setIsAddFoodOpen(false);
-    handleAddFood(body);
+    handleAddFood(body, body.user?._id as string);
   };
 
   return (

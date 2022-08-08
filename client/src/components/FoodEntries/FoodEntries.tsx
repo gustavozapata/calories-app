@@ -1,6 +1,5 @@
 import React from "react";
 import { Food } from "../../@types/food";
-import Loading from "../Loading/Loading";
 import "./FoodEntries.css";
 
 export interface FoodEntriesProps {

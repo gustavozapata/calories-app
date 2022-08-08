@@ -5,6 +5,8 @@ import { User } from "../@types/user";
 import { Food } from "../@types/food";
 import {
   apiAddFood,
+  apiDeleteFood,
+  apiEditFood,
   apiGetFoods,
   apiUpdateCalorieLimit,
 } from "../services/food";
@@ -30,7 +32,9 @@ interface AppContextInterface {
   ) => void;
   handleSignup: (body: object, callback: (l: boolean) => void) => void;
   handleLogout: () => void;
-  handleAddFood: (body: Food) => void;
+  handleAddFood: (body: Food, id: string) => void;
+  handleEditFood: (body: Food, id: string) => void;
+  handleDeleteFood: (id: string) => void;
   updateCalorieLimit: (
     user: string,
     calorieLimit: string,
@@ -49,6 +53,8 @@ const initialState: AppContextInterface = {
   handleSignup: () => {},
   handleLogout: () => {},
   handleAddFood: () => {},
+  handleEditFood: () => {},
+  handleDeleteFood: () => {},
   updateCalorieLimit: () => {},
   loadInitialData: () => {},
 };
@@ -100,6 +106,22 @@ const appReducer = (
       return {
         ...state,
         foodEntries: [...state.foodEntries, action.payload],
+      };
+    case "editFoodEntry":
+      const index = state.foodEntries.findIndex(
+        (entry) => entry._id === action.payload._id
+      );
+      state.foodEntries[index] = action.payload;
+      return {
+        ...state,
+        foodEntries: [...state.foodEntries],
+      };
+    case "deleteFoodEntry":
+      return {
+        ...state,
+        foodEntries: state.foodEntries.filter(
+          (entry) => entry._id !== action.payload
+        ),
       };
     case "updateCalorieLimit":
       return {
@@ -184,12 +206,36 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const handleAddFood = async (body: Food) => {
+  const handleAddFood = async (body: Food, id: string) => {
     try {
-      const newFood = await apiAddFood(body);
+      const newFood = await apiAddFood(body, id);
       dispatch({
         type: "addFoodEntry",
         payload: newFood,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleEditFood = async (body: Food, id: string) => {
+    try {
+      const updatedFood = await apiEditFood(body, id);
+      dispatch({
+        type: "editFoodEntry",
+        payload: updatedFood,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleDeleteFood = async (id: string) => {
+    try {
+      const deletedFoodId = await apiDeleteFood(id);
+      dispatch({
+        type: "deleteFoodEntry",
+        payload: deletedFoodId,
       });
     } catch (e) {
       console.log(e);
@@ -221,6 +267,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         handleSignup,
         handleLogout,
         handleAddFood,
+        handleEditFood,
+        handleDeleteFood,
         updateCalorieLimit,
         loadInitialData,
       }}

@@ -18,3 +18,8 @@
 .cancel:hover {
   background-color: #f7f7f7;
 }
+.Button:disabled {
+  background-color: #173878;
+  color: #929eb5;
+  cursor: not-allowed;
+}
