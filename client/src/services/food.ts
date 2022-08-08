@@ -10,12 +10,33 @@ export const apiGetFoods = async (id: string) => {
   }
 };
 
-export const apiAddFood = async (body: Food) => {
+export const apiAddFood = async (body: Food, id: string) => {
+  delete body._id;
   try {
-    const food = await axiosProtect.post(`${url}/food/${body.user?._id}`, {
+    const food = await axiosProtect.post(`${url}/food/${id}`, {
       ...body,
     });
     return food.data.data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const apiEditFood = async (body: Food, id: string) => {
+  try {
+    const food = await axiosProtect.patch(`${url}/food/${id}`, {
+      ...body,
+    });
+    return food.data.data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const apiDeleteFood = async (id: string) => {
+  try {
+    await axiosProtect.delete(`${url}/food/${id}`);
+    return id;
   } catch (e) {
     throw e;
   }

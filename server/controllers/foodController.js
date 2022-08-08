@@ -14,6 +14,8 @@ exports.getFoods = async (req, res) => {
 };
 
 exports.createFood = async (req, res) => {
+  console.log("req.body", req.body);
+  console.log("req.params.userId", req.params.userId);
   const newFood = await Food.create(req.body);
   res.status(201).json({
     status: "success",
@@ -22,7 +24,7 @@ exports.createFood = async (req, res) => {
 };
 
 exports.editFood = async (req, res) => {
-  const food = await Food.findByIdAndUpdate(req.params.id, req.body, {
+  const food = await Food.findByIdAndUpdate(req.body._id, req.body, {
     new: true,
   });
   res.status(200).json({
@@ -32,7 +34,7 @@ exports.editFood = async (req, res) => {
 };
 
 exports.deleteFood = async (req, res) => {
-  await Food.findByIdAndDelete(req.params.id);
+  await Food.findByIdAndDelete(req.params.userId);
   res.status(204).json({
     status: "success",
     data: req.params.id,

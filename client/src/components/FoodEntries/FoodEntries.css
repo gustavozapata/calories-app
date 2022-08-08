@@ -16,3 +16,25 @@
 .user-row {
   font-weight: 600;
 }
+.FoodEntries tbody .food-row {
+  max-width: 130px;
+}
+.actions-row {
+  /* display: flex; */
+  margin-top: 10px;
+  justify-content: space-between;
+}
+.actions-row span {
+  font-size: 0.75em;
+  border: 1px dashed gray;
+  color: #5e80e6;
+  padding: 2px;
+  margin: 0 3px;
+  cursor: pointer;
+}
+.actions-row .actions-delete {
+  color: rgb(240, 64, 146);
+}
+.actions-row .actions-edit {
+  color: rgb(240, 131, 64);
+}

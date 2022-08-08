@@ -13,6 +13,11 @@ interface FoodFormProps {
   confirm: string;
   onConfirm: (body: Food) => void;
   onCancel: () => void;
+  manageUserId?: string;
+  foodId?: string;
+  foodValue?: string;
+  caloriesValue?: string;
+  dateValue?: string;
 }
 
 const FoodForm: React.FC<FoodFormProps> = ({
@@ -20,12 +25,17 @@ const FoodForm: React.FC<FoodFormProps> = ({
   confirm,
   onConfirm,
   onCancel,
+  manageUserId,
+  foodId,
+  foodValue = "",
+  caloriesValue = "",
+  dateValue = new Date().toISOString().slice(0, 16),
 }) => {
-  const [food, setFood] = useState("");
-  const [calories, setCalories] = useState("");
+  const [food, setFood] = useState(foodValue);
+  const [calories, setCalories] = useState(caloriesValue);
+  const [date, setDate] = useState(dateValue);
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 16));
   const { user } = useContext(AppContext);
 
   useEffect(() => {
@@ -92,8 +102,15 @@ const FoodForm: React.FC<FoodFormProps> = ({
         <Button variant="cancel" label="Cancel" handleClick={onCancel} />
         <Button
           label={confirm}
+          disabled={food === "" || calories === "" || date === ""}
           handleClick={() =>
-            onConfirm({ name: food, calories, date, user: { _id: user._id } })
+            onConfirm({
+              _id: foodId,
+              name: food,
+              calories,
+              date,
+              user: { _id: user.role !== "admin" ? user._id : manageUserId },
+            })
           }
         />
       </div>

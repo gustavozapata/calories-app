@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/Input/Input";
+import Loading from "../../components/Loading/Loading";
 import AppContext from "../../context";
 import {
   isValidInput,
@@ -13,6 +14,7 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [clientMessage, setClientMessage] = useState("");
   const { handleSignup, serverMessage } = useContext(AppContext);
   const navigate = useNavigate();
@@ -24,9 +26,11 @@ const Signup = () => {
       isValidEmail(email) &&
       isValidPassword(password)
     ) {
+      setIsLoading(true);
       handleSignup(
         { name: name.trim(), email: email.trim(), password },
         (logged) => {
+          setIsLoading(false);
           if (logged) {
             navigate("/");
           }
@@ -65,6 +69,7 @@ const Signup = () => {
         />
         <button>Signup</button>
       </form>
+      {isLoading && <Loading />}
       <p>{clientMessage}</p>
       <p>{serverMessage}</p>
       <p>
