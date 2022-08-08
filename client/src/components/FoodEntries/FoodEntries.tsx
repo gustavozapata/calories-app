@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Food } from "../../@types/food";
-import AppContext from "../../context";
 import Loading from "../Loading/Loading";
 import "./FoodEntries.css";
 
@@ -9,18 +8,15 @@ export interface FoodEntriesProps {
 }
 
 const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
-  const { user } = useContext(AppContext);
-
   return (
     <div className="FoodEntries">
       {entries.length > 0 ? (
         <table>
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Food</th>
               <th>Calories</th>
               <th>Date and time</th>
-              {user.role === "admin" && <th>User</th>}
             </tr>
           </thead>
           <tbody>
@@ -28,8 +24,7 @@ const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
               <tr key={entry._id}>
                 <td>{entry.name}</td>
                 <td>{entry.calories}</td>
-                <td>{new Date(entry.date).toLocaleString()}</td>
-                {user.role === "admin" && <td>{entry.user?.name}</td>}
+                <td>{new Date(entry.date).toLocaleString().slice(0, -3)}</td>
               </tr>
             ))}
           </tbody>
