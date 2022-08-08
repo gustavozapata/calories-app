@@ -15,7 +15,7 @@ interface UserGroup {
   entries: Array<Food>;
 }
 
-const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
+const ManageFoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
   const { handleAddFood, handleEditFood, handleDeleteFood } =
     useContext(AppContext);
   const [manageAction, setManageAction] = useState("");
@@ -159,4 +159,4 @@ const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
   );
 };
 
-export default FoodEntries;
+export default ManageFoodEntries;
