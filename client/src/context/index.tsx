@@ -124,6 +124,9 @@ const appReducer = (
         ),
       };
     case "updateCalorieLimit":
+      const updateUser = JSON.parse(localStorage.getItem("user") || "{}");
+      updateUser.calorieLimit = action.payload;
+      localStorage.setItem("user", JSON.stringify(updateUser));
       return {
         ...state,
         user: {
@@ -251,7 +254,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       const updatedUser = await apiUpdateCalorieLimit(user, calorieLimit);
       dispatch({
         type: "updateCalorieLimit",
-        payload: updatedUser,
+        payload: updatedUser.calorieLimit,
       });
       callback(true);
     } catch (e) {
