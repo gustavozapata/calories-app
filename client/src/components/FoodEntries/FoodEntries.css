@@ -19,16 +19,12 @@
 .FoodEntries tbody .food-row {
   max-width: 130px;
 }
-.actions-row {
-  /* display: flex; */
-  margin-top: 10px;
-  justify-content: space-between;
-}
+.user-row span,
 .actions-row span {
   font-size: 0.75em;
   border: 1px dashed gray;
   color: #5e80e6;
-  padding: 2px;
+  padding: 4px;
   margin: 0 3px;
   cursor: pointer;
 }
