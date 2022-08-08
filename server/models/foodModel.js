@@ -20,7 +20,7 @@ const foodSchema = new Schema({
   },
 });
 
-foodSchema.pre(/^find/, function (next) {
+foodSchema.pre([/^find/, "save"], function (next) {
   this.populate({ path: "user", select: "_id name" });
   next();
 });

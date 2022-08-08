@@ -14,8 +14,6 @@ exports.getFoods = async (req, res) => {
 };
 
 exports.createFood = async (req, res) => {
-  console.log("req.body", req.body);
-  console.log("req.params.userId", req.params.userId);
   const newFood = await Food.create(req.body);
   res.status(201).json({
     status: "success",
