@@ -16,6 +16,11 @@ const Navigation: React.FC = () => {
           <li>
             <NavLink to="/">Home</NavLink>
           </li>
+          {user.role === "admin" && (
+            <li>
+              <NavLink to="/report">Report</NavLink>
+            </li>
+          )}
         </ul>
       </nav>
       <div className="nav-account">
