@@ -1,0 +1,12 @@
+.FilterEntries {
+  display: inline-block;
+}
+.FilterEntries input {
+  margin-right: 8px;
+}
+.clear-filter {
+  margin-right: 8px;
+  text-decoration: underline;
+  font-size: 0.9em;
+  cursor: pointer;
+}

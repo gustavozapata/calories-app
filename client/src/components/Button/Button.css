@@ -10,16 +10,19 @@
 .Button:hover {
   background-color: #2768d9;
 }
-.cancel {
+.secondary {
   background-color: #fff;
   color: #696f8c;
-  border: 1px solid #d8dae5;
+  border: 1px solid #797d91;
 }
-.cancel:hover {
+.secondary:hover {
   background-color: #f7f7f7;
 }
 .Button:disabled {
   background-color: #173878;
   color: #929eb5;
   cursor: not-allowed;
+}
+.btn-small {
+  padding: 4px 8px;
 }

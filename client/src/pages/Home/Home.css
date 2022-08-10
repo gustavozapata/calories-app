@@ -15,3 +15,10 @@
   font-size: 1em;
   margin-left: 3px;
 }
+.entries-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 65%;
+  margin: 0 auto 20px auto;
+}

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Food } from "../../@types/food";
 import Button from "../../components/Button/Button";
+import FilterEntries from "../../components/FilterEntries/FilterEntries";
 import FoodEntries from "../../components/FoodEntries/FoodEntries";
 import FoodForm from "../../components/FoodForm/FoodForm";
 import Check from "../../components/Icons/Check";
@@ -56,7 +57,10 @@ const UserHomePage: React.FC = () => {
           </>
         )}
       </div>
-      <Button label="+ Add food" handleClick={() => setIsAddFoodOpen(true)} />
+      <div className="entries-bar">
+        <Button label="+ Add food" handleClick={() => setIsAddFoodOpen(true)} />
+        <FilterEntries />
+      </div>
       <FoodEntries entries={foodEntries} />
       {isAddFoodOpen && (
         <Modal>
