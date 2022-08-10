@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Food } from "../../@types/food";
 import AppContext from "../../context";
+import { groupEntriesByUser } from "../../utils";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import FoodForm from "../FoodForm/FoodForm";
 import Modal from "../Modal/Modal";
@@ -30,23 +31,7 @@ const ManageFoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
   const [userGroups, setUserGroups] = useState<Array<UserGroup>>([]);
 
   useEffect(() => {
-    const parseFoodEntries = () => {
-      const groups: UserGroup[] = [];
-      entries.forEach((entry) => {
-        if (!groups.find((group) => group.user === entry.user?.name)) {
-          groups.push({
-            user: entry.user?.name,
-            entries: [entry],
-          });
-        } else {
-          groups
-            .find((group) => group.user === entry.user?.name)
-            ?.entries.push(entry);
-        }
-      });
-      return groups;
-    };
-    setUserGroups(parseFoodEntries());
+    setUserGroups(groupEntriesByUser(entries));
   }, [entries]);
 
   const handleManageFood = (body: Food) => {
