@@ -1,2 +1,7 @@
-.Report {
+.Report h1 {
+  margin-bottom: 5px;
+}
+.report-date {
+  color: rgb(71, 71, 71);
+  font-size: 0.95em;
 }

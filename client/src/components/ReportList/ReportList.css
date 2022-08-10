@@ -1,0 +1,12 @@
+.weeks-header {
+  font-size: 1.1em;
+  color: rgb(100, 54, 217);
+}
+.weeks-header th {
+  padding: 10px;
+  font-weight: 500;
+}
+.weeks-header span {
+  font-size: 0.8em;
+  color: grey;
+}
