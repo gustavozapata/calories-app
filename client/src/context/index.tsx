@@ -24,7 +24,13 @@ interface AppContextInterface {
   user: User;
   toke: string;
   foodEntries: Array<Food>;
+  filteredEntries: Array<Food>;
+  filterApplied: boolean;
   serverMessage: string;
+  fromDate: string;
+  toDate: string;
+  setFromDate: (date: string) => void;
+  setToDate: (date: string) => void;
   handleLogin: (
     email: string,
     password: string,
@@ -35,6 +41,8 @@ interface AppContextInterface {
   handleAddFood: (body: Food, id: string) => void;
   handleEditFood: (body: Food, id: string) => void;
   handleDeleteFood: (id: string) => void;
+  handleClearFilter: () => void;
+  filterEntriesByDate: (fromDate: string, toDate: string) => void;
   updateCalorieLimit: (
     user: string,
     calorieLimit: string,
@@ -48,13 +56,21 @@ const initialState: AppContextInterface = {
   user: JSON.parse(localStorage.getItem("user") || "{}") || (user as User),
   toke: localStorage.getItem("token") || "",
   foodEntries: [],
+  filteredEntries: [],
+  filterApplied: false,
   serverMessage: "",
+  fromDate: "",
+  toDate: "",
+  setFromDate: () => {},
+  setToDate: () => {},
   handleLogin: () => {},
   handleSignup: () => {},
   handleLogout: () => {},
   handleAddFood: () => {},
   handleEditFood: () => {},
   handleDeleteFood: () => {},
+  handleClearFilter: () => {},
+  filterEntriesByDate: () => {},
   updateCalorieLimit: () => {},
   loadInitialData: () => {},
 };
@@ -102,6 +118,20 @@ const appReducer = (
         ...state,
         foodEntries: action.payload,
       };
+    case "setFilteredEntries":
+      return {
+        ...state,
+        filteredEntries: action.payload,
+        filterApplied: true,
+      };
+    case "clearFilteredEntries":
+      return {
+        ...state,
+        filteredEntries: action.payload,
+        filterApplied: false,
+        fromDate: "",
+        toDate: "",
+      };
     case "addFoodEntry":
       return {
         ...state,
@@ -133,6 +163,16 @@ const appReducer = (
           ...state.user,
           calorieLimit: action.payload,
         },
+      };
+    case "setFromDate":
+      return {
+        ...state,
+        fromDate: action.payload,
+      };
+    case "setToDate":
+      return {
+        ...state,
+        toDate: action.payload,
       };
     case "setServerMessage":
       return {
@@ -262,6 +302,36 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const filterEntriesByDate = (fromDate: string, toDate: string) => {
+    const filteredEntries = state.foodEntries.filter(
+      (entry: Food) => entry.date >= fromDate && entry.date <= toDate
+    );
+    console.log(filteredEntries);
+    dispatch({
+      type: "setFilteredEntries",
+      payload: filteredEntries,
+    });
+  };
+
+  const handleClearFilter = () => {
+    dispatch({
+      type: "clearFilteredEntries",
+      payload: [],
+    });
+  };
+  const setFromDate = (value: string) => {
+    dispatch({
+      type: "setFromDate",
+      payload: value,
+    });
+  };
+  const setToDate = (value: string) => {
+    dispatch({
+      type: "setToDate",
+      payload: value,
+    });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -272,7 +342,11 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         handleAddFood,
         handleEditFood,
         handleDeleteFood,
+        setFromDate,
+        setToDate,
         updateCalorieLimit,
+        filterEntriesByDate,
+        handleClearFilter,
         loadInitialData,
       }}
     >

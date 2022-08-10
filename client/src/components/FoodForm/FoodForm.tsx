@@ -99,7 +99,7 @@ const FoodForm: React.FC<FoodFormProps> = ({
         />
       </form>
       <div className="popup-buttons">
-        <Button variant="cancel" label="Cancel" handleClick={onCancel} />
+        <Button variant="secondary" label="Cancel" handleClick={onCancel} />
         <Button
           label={confirm}
           disabled={food === "" || calories === "" || date === ""}

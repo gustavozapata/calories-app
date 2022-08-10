@@ -21,7 +21,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
         <Button
           label="Cancel"
           handleClick={() => setDeleteId("")}
-          variant="cancel"
+          variant="secondary"
         />
         <Button label="Delete" handleClick={() => onDeleteFood(deleteId)} />
       </div>
