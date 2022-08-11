@@ -107,11 +107,7 @@ const appReducer = (
       localStorage.setItem("token", "");
       localStorage.setItem("isLoggedIn", JSON.stringify(false));
       return {
-        ...state,
-        isLoggedIn: false,
-        token: "",
-        user: user,
-        foodEntries: [],
+        ...initialState,
       };
     case "setFoodEntries":
       return {
