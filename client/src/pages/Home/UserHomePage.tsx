@@ -41,13 +41,22 @@ const UserHomePage: React.FC = () => {
               type="text"
               onChange={handleCalorieLimit}
             />
-            <Close handleClick={() => setIsEditable(false)} />
+            <Close
+              handleClick={() => {
+                if (calorieLimit === "") {
+                  setCalorieLimit(user.calorieLimit.toString());
+                }
+                setIsEditable(false);
+              }}
+            />
             <Check
-              handleClick={() =>
-                updateCalorieLimit(user._id, calorieLimit, () =>
-                  setIsEditable(false)
-                )
-              }
+              handleClick={() => {
+                if (calorieLimit !== "") {
+                  updateCalorieLimit(user._id, calorieLimit, () =>
+                    setIsEditable(false)
+                  );
+                }
+              }}
             />
           </>
         ) : (

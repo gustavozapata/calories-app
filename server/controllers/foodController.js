@@ -3,9 +3,9 @@ const Food = require("../models/foodModel");
 exports.getFoods = async (req, res) => {
   let foods = [];
   if (req.user.role === "admin") {
-    foods = await Food.find();
+    foods = await Food.find().sort({ date: -1 });
   } else {
-    foods = await Food.find({ user: req.params.userId });
+    foods = await Food.find({ user: req.params.userId }).sort({ date: -1 });
   }
   res.status(200).json({
     status: "success",
