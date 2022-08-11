@@ -4,6 +4,7 @@ import {
   getDatesForWeek,
   groupEntriesByUser,
   filterEntriesByWeek,
+  calcAverage,
 } from "../../utils";
 import "./ReportList.css";
 
@@ -17,6 +18,12 @@ interface ReportData {
   recentAvgCalories: number;
   lastEntries: number;
   lastAvgCalories: number;
+}
+
+interface ReportEntries {
+  user: string;
+  entries: Food[];
+  lastEntriesArray: Food[];
 }
 
 const ReportList: React.FC<ReportListProps> = ({ entries }) => {
@@ -37,11 +44,7 @@ const ReportList: React.FC<ReportListProps> = ({ entries }) => {
     const entriesByRecentWeek = filterEntriesByWeek(entriesByUser, 1);
     const entriesByLastWeek = filterEntriesByWeek(entriesByUser, 2);
 
-    let combineEntries: {
-      user: string;
-      entries: Food[];
-      lastEntriesArray: Food[];
-    }[] = [];
+    let combineEntries: ReportEntries[] = [];
     entriesByRecentWeek.forEach((recentEntry) => {
       entriesByLastWeek.forEach((lastEntry) => {
         if (recentEntry.user === lastEntry.user) {
@@ -58,16 +61,12 @@ const ReportList: React.FC<ReportListProps> = ({ entries }) => {
         user: report.user,
         recentEntries: report.entries.length,
         recentAvgCalories:
-          report.entries.reduce((acc: any, entry: any) => {
-            return acc + entry.calories;
-          }, 0) / report.entries.length,
+          calcAverage(report.lastEntriesArray) / report.entries.length,
 
         lastEntries: report.lastEntriesArray.length,
         lastAvgCalories:
           report.lastEntriesArray.length > 0
-            ? report.lastEntriesArray.reduce((acc: any, entry: any) => {
-                return acc + entry.calories;
-              }, 0) / report.lastEntriesArray.length
+            ? calcAverage(report.lastEntriesArray)
             : 0,
       };
     });

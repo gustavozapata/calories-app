@@ -24,13 +24,10 @@ export const filterEntriesByWeek = (
   entriesByUser: { user: string; entries: Food[] }[],
   weekPast: number
 ) => {
-  let epa = entriesByUser.map((el) => {
-    return {
-      ...el,
-      entries: el.entries.filter((entry) => isBetweenDates(entry, weekPast)),
-    };
-  });
-  return epa;
+  return entriesByUser.map((el) => ({
+    ...el,
+    entries: el.entries.filter((entry) => isBetweenDates(entry, weekPast)),
+  }));
 };
 
 export const getDatesForWeek = (weekPast: number) => {
@@ -80,4 +77,12 @@ export const dateToString = (date: Date) => {
     month: "long",
     day: "numeric",
   });
+};
+
+export const calcAverage = (arr: Food[]) => {
+  return (
+    arr.reduce((acc: number, entry: any) => {
+      return acc + entry.calories;
+    }, 0) / arr.length
+  );
 };
