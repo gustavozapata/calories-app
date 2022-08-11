@@ -1,8 +1,8 @@
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Food, NutritionixFood } from "../../@types/food";
 import AppContext from "../../context";
 import { nutritionix_url } from "../../services";
+import { axiosNutritionix } from "../../services";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
 import Suggestions from "../Suggestions/Suggestions";
@@ -20,6 +20,8 @@ interface FoodFormProps {
   dateValue?: string;
 }
 
+const ITEMS_TO_SHOW = 3;
+
 const FoodForm: React.FC<FoodFormProps> = ({
   title,
   confirm,
@@ -34,7 +36,7 @@ const FoodForm: React.FC<FoodFormProps> = ({
   const [food, setFood] = useState(foodValue);
   const [calories, setCalories] = useState(caloriesValue);
   const [date, setDate] = useState(dateValue);
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState<any>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const { user } = useContext(AppContext);
 
@@ -44,23 +46,32 @@ const FoodForm: React.FC<FoodFormProps> = ({
     }
   }, [food]);
 
-  const handleApiGetFood = (query: string) => {
-    axios
-      .get(`${nutritionix_url}?query=${query}`, {
-        headers: {
-          "x-app-id": process.env.REACT_APP_NUTRITIONIX_APP_ID as string,
-          "x-app-key": process.env.REACT_APP_NUTRITIONIX_API_KEY as string,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setSuggestions(res.data.branded);
-      });
+  const handleApiGetFood = async (query: string) => {
+    const foodItems = await axiosNutritionix.get(
+      `${nutritionix_url}/search/instant?query=${query}`
+    );
+    setSuggestions([
+      ...foodItems.data.common.slice(0, ITEMS_TO_SHOW),
+      ...foodItems.data.branded.slice(0, ITEMS_TO_SHOW),
+    ]);
+  };
+
+  const getFoodCalories = async (foodName: string) => {
+    const foodCalories = await axiosNutritionix.post(
+      `${nutritionix_url}/natural/nutrients?query=${foodName}`,
+      { query: foodName }
+    );
+    console.log(foodCalories.data);
+    setCalories(foodCalories.data.foods[0].nf_calories);
   };
 
   const handleSelect = (item: NutritionixFood) => {
     setFood(item.food_name);
-    setCalories(item.nf_calories.toFixed(2).replace(/\.00$/, "").toString());
+    if (item.nf_calories) {
+      setCalories(item.nf_calories.toFixed(2).replace(/\.00$/, "").toString());
+    } else {
+      getFoodCalories(item.food_name);
+    }
     setShowSuggestions(false);
   };
 
@@ -73,6 +84,11 @@ const FoodForm: React.FC<FoodFormProps> = ({
             label="Food"
             type="text"
             size="large"
+            msg={
+              suggestions.length < 1 && food !== ""
+                ? "Food not found, please enter manually"
+                : ""
+            }
             value={food}
             handleChange={(e) => setFood(e.target.value)}
             handleFocus={() => setShowSuggestions(true)}
@@ -82,6 +98,7 @@ const FoodForm: React.FC<FoodFormProps> = ({
             <Suggestions
               handleSelect={handleSelect}
               suggestions={suggestions}
+              itemsToShow={ITEMS_TO_SHOW}
             />
           )}
         </div>
