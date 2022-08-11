@@ -107,7 +107,15 @@ const appReducer = (
       localStorage.setItem("token", "");
       localStorage.setItem("isLoggedIn", JSON.stringify(false));
       return {
-        ...initialState,
+        ...state,
+        isLoggedIn: false,
+        token: "",
+        user: user,
+        foodEntries: [],
+        filteredEntries: [],
+        filterApplied: false,
+        fromDate: "",
+        toDate: "",
       };
     case "setFoodEntries":
       return {
@@ -131,7 +139,9 @@ const appReducer = (
     case "addFoodEntry":
       return {
         ...state,
-        foodEntries: [...state.foodEntries, action.payload],
+        foodEntries: [...state.foodEntries, action.payload].sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        ),
       };
     case "editFoodEntry":
       const index = state.foodEntries.findIndex(
