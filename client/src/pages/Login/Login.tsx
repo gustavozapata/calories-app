@@ -18,7 +18,9 @@ const Login: React.FC<LoginProps> = () => {
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isValidEmail(email) && isValidPassword(password)) {
+    if (email === "" || password === "") {
+      handleClientMessage("All fields are required");
+    } else if (isValidEmail(email)) {
       setIsLoading(true);
       handleLogin(email.trim(), password, (logged) => {
         setIsLoading(false);
@@ -27,11 +29,15 @@ const Login: React.FC<LoginProps> = () => {
         }
       });
     } else {
-      setClientMessage("Invalid value in email or password");
-      setTimeout(() => {
-        setClientMessage("");
-      }, 2500);
+      handleClientMessage("Invalid email");
     }
+  };
+
+  const handleClientMessage = (message: string) => {
+    setClientMessage(message);
+    setTimeout(() => {
+      setClientMessage("");
+    }, 2500);
   };
 
   return (
@@ -39,13 +45,13 @@ const Login: React.FC<LoginProps> = () => {
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <Input
-          label="Email"
+          label="*Email"
           value={email}
           type="email"
           handleChange={(e) => setEmail(e.target.value)}
         />
         <Input
-          label="Password"
+          label="*Password"
           value={password}
           type="password"
           handleChange={(e) => setPassword(e.target.value)}

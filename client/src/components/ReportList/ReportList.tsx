@@ -102,9 +102,11 @@ const ReportList: React.FC<ReportListProps> = ({ entries }) => {
               <tr key={entry.user}>
                 <td>{entry.user}</td>
                 <td>{entry.recentEntries}</td>
-                <td>{entry.recentAvgCalories}</td>
+                <td>
+                  {entry.recentAvgCalories.toFixed(2).replace(/\.00$/, "")}
+                </td>
                 <td>{entry.lastEntries}</td>
-                <td>{entry.lastAvgCalories}</td>
+                <td>{entry.lastAvgCalories.toFixed(2).replace(/\.00$/, "")}</td>
               </tr>
             ))}
           </tbody>

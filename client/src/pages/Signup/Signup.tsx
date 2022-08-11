@@ -21,11 +21,12 @@ const Signup = () => {
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (
-      isValidInput(name) &&
-      isValidEmail(email) &&
-      isValidPassword(password)
-    ) {
+    if (name === "" || email === "" || password === "") {
+      handleClientMessage("All fields are required");
+    }
+    if (!isValidPassword(password)) {
+      handleClientMessage("Password must be between 5 and 15 characters");
+    } else if (isValidInput(name) && isValidEmail(email)) {
       setIsLoading(true);
       handleSignup(
         { name: name.trim(), email: email.trim(), password },
@@ -36,12 +37,14 @@ const Signup = () => {
           }
         }
       );
-    } else {
-      setClientMessage("Invalid value in name, email or password");
-      setTimeout(() => {
-        setClientMessage("");
-      }, 2500);
     }
+  };
+
+  const handleClientMessage = (message: string) => {
+    setClientMessage(message);
+    setTimeout(() => {
+      setClientMessage("");
+    }, 2500);
   };
 
   return (
@@ -49,19 +52,19 @@ const Signup = () => {
       <h1>Signup</h1>
       <form onSubmit={handleSubmit}>
         <Input
-          label="Name"
+          label="*Name"
           type="text"
           value={name}
           handleChange={(e) => setName(e.target.value)}
         />
         <Input
-          label="Email"
+          label="*Email"
           type="email"
           value={email}
           handleChange={(e) => setEmail(e.target.value)}
         />
         <Input
-          label="Password"
+          label="*Password"
           value={password}
           type="password"
           msg="Must be between 5 and 15 characters"

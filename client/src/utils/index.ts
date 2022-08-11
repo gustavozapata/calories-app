@@ -62,6 +62,18 @@ export const isBetweenDates = (entry: Food, weekPast: number) => {
   );
 };
 
+export const groupEntriesByDay = (entries: Food[]) => {
+  const groupedEntries = entries.reduce((acc: any, entry) => {
+    const date = entry.date.split("T")[0];
+    if (!acc[date]) {
+      acc[date] = [];
+    }
+    acc[date].push(entry);
+    return acc;
+  }, {});
+  return groupedEntries;
+};
+
 export const dateToString = (date: Date) => {
   return date.toLocaleDateString(undefined, {
     year: "numeric",

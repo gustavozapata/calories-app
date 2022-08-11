@@ -1,6 +1,6 @@
 // validate input
 export const isValidInput = (input: string): boolean => {
-  return input.length > 1;
+  return input.length > 0;
 };
 
 // validate email address

@@ -34,3 +34,6 @@
 .actions-row .actions-edit {
   color: rgb(240, 131, 64);
 }
+.th-calorie-limit {
+  width: 120px;
+}
