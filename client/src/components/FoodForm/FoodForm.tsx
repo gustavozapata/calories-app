@@ -92,11 +92,11 @@ const FoodForm: React.FC<FoodFormProps> = ({
             value={food}
             handleChange={(e) => setFood(e.target.value)}
             handleFocus={() => setShowSuggestions(true)}
-            // handleBlur={() => setShowSuggestions(false)}
           />
           {showSuggestions && suggestions.length > 0 && (
             <Suggestions
               handleSelect={handleSelect}
+              setShowSuggestions={setShowSuggestions}
               suggestions={suggestions}
               itemsToShow={ITEMS_TO_SHOW}
             />

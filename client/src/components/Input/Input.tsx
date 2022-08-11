@@ -9,7 +9,6 @@ export interface InputProps {
   size?: "small" | "large";
   handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleFocus?: () => void;
-  handleBlur?: (e: any) => void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -20,7 +19,6 @@ const Input: React.FC<InputProps> = ({
   size = "small",
   handleChange,
   handleFocus,
-  handleBlur,
 }) => {
   return (
     <div className="Input">
@@ -33,7 +31,6 @@ const Input: React.FC<InputProps> = ({
         value={value}
         onChange={handleChange}
         onFocus={handleFocus}
-        onBlur={handleBlur}
       />
       <p>{msg}</p>
     </div>

@@ -1,0 +1,8 @@
+.Circle {
+  margin-right: 7px;
+  pointer-events: all;
+  cursor: pointer;
+}
+.Circle path {
+  fill: #000;
+}
