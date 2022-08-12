@@ -64,11 +64,11 @@ const ManageFoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
           <tbody>
             {userGroups.map((group, index) => (
               <React.Fragment key={index}>
-                {group.entries.map((entry, index) => (
-                  <tr key={entry._id}>
-                    <td className="user-row">
-                      {index === 0 && (
-                        <>
+                {group.entries.map((entry, index) => {
+                  if (entry.name === "") {
+                    return (
+                      <tr key={entry.user?._id}>
+                        <td className="user-row">
                           {group.user}
                           <span
                             onClick={() => {
@@ -78,37 +78,56 @@ const ManageFoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
                           >
                             Add food
                           </span>
-                        </>
-                      )}
-                    </td>
-                    <td className="food-row">{entry.name}</td>
-                    <td>{entry.calories}</td>
-                    <td>{renderDate(entry.date, -3)}</td>
-                    <td className="actions-row">
-                      <span
-                        className="actions-edit"
-                        onClick={() => {
-                          setEntry({
-                            foodValue: entry.name,
-                            caloriesValue: entry.calories,
-                            dateValue: new Date(entry.date).toString(),
-                          });
-                          setFoodId(entry?._id as string);
-                          setManageUserId(entry.user?._id as string);
-                          setManageAction("edit");
-                        }}
-                      >
-                        Edit
-                      </span>
-                      <span
-                        onClick={() => setDeleteId(entry._id as string)}
-                        className="actions-delete"
-                      >
-                        Delete
-                      </span>
-                    </td>
-                  </tr>
-                ))}
+                        </td>
+                      </tr>
+                    );
+                  }
+                  return (
+                    <tr key={entry._id}>
+                      <td className="user-row">
+                        {index === 0 && (
+                          <>
+                            {group.user}
+                            <span
+                              onClick={() => {
+                                setManageUserId(entry.user?._id as string);
+                                setManageAction("add");
+                              }}
+                            >
+                              Add food
+                            </span>
+                          </>
+                        )}
+                      </td>
+                      <td className="food-row">{entry.name}</td>
+                      <td>{entry.calories}</td>
+                      <td>{renderDate(entry.date, -3)}</td>
+                      <td className="actions-row">
+                        <span
+                          className="actions-edit"
+                          onClick={() => {
+                            setEntry({
+                              foodValue: entry.name,
+                              caloriesValue: entry.calories,
+                              dateValue: new Date(entry.date).toString(),
+                            });
+                            setFoodId(entry?._id as string);
+                            setManageUserId(entry.user?._id as string);
+                            setManageAction("edit");
+                          }}
+                        >
+                          Edit
+                        </span>
+                        <span
+                          onClick={() => setDeleteId(entry._id as string)}
+                          className="actions-delete"
+                        >
+                          Delete
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
               </React.Fragment>
             ))}
           </tbody>

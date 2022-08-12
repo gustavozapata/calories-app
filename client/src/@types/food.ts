@@ -7,6 +7,7 @@ export type Food = {
     _id?: string;
     name?: string;
   };
+  users?: any;
 };
 
 export type NutritionixFood = {
