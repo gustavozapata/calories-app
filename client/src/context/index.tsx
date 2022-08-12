@@ -318,10 +318,16 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const filterEntriesByDate = (fromDate: string, toDate: string) => {
-    const filteredEntries = state.foodEntries.filter(
-      (entry: Food) => entry.date >= fromDate && entry.date <= toDate
-    );
-    console.log(filteredEntries);
+    const filteredEntries = state.foodEntries.filter((entry: Food) => {
+      let date = new Date(entry.date).toISOString().split("T")[0];
+      if (
+        new Date(date) >= new Date(fromDate) &&
+        new Date(date) <= new Date(toDate)
+      ) {
+        return entry;
+      }
+      return null;
+    });
     dispatch({
       type: "setFilteredEntries",
       payload: filteredEntries,

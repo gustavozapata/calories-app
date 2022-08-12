@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import AppContext from "../../context";
 import Button from "../Button/Button";
 import "./FilterEntries.css";
@@ -8,6 +8,7 @@ const FilterEntries: React.FC = () => {
     filterApplied,
     fromDate,
     toDate,
+    foodEntries,
     setFromDate,
     setToDate,
     filterEntriesByDate,
@@ -17,6 +18,12 @@ const FilterEntries: React.FC = () => {
   const applyFilter = () => {
     filterEntriesByDate(fromDate, toDate);
   };
+
+  useEffect(() => {
+    if (filterApplied) {
+      applyFilter();
+    }
+  }, [foodEntries]);
 
   return (
     <div className="FilterEntries">
