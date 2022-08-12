@@ -1,9 +1,21 @@
+const User = require("../models/userModel");
 const Food = require("../models/foodModel");
 
 exports.getFoods = async (req, res) => {
   let foods = [];
+  let users = [];
   if (req.user.role === "admin") {
     foods = await Food.find().sort({ date: -1 });
+    users = await User.find().select(["-password", "-__v"]);
+    foods.push({
+      name: "",
+      date: new Date(),
+      users: users.filter((user) =>
+        foods.every(
+          (food) => food.user.name !== user.name && user.role !== "admin"
+        )
+      ),
+    });
   } else {
     foods = await Food.find({ user: req.params.userId }).sort({ date: -1 });
   }
