@@ -10,6 +10,7 @@ import {
   apiGetFoods,
   apiUpdateCalorieLimit,
 } from "../services/food";
+import { addHours } from "../utils";
 
 const user: User = {
   _id: "",
@@ -118,6 +119,10 @@ const appReducer = (
         toDate: "",
       };
     case "setFoodEntries":
+      action.payload = action.payload.map((entry: Food) => {
+        entry.date = addHours(new Date(entry.date), 1).toISOString();
+        return entry;
+      });
       return {
         ...state,
         foodEntries: action.payload,
@@ -137,6 +142,7 @@ const appReducer = (
         toDate: "",
       };
     case "addFoodEntry":
+      action.payload.date = addHours(action.payload.date, 1).toISOString();
       return {
         ...state,
         foodEntries: [...state.foodEntries, action.payload].sort(
@@ -148,6 +154,7 @@ const appReducer = (
         (entry) => entry._id === action.payload._id
       );
       state.foodEntries[index] = action.payload;
+      action.payload.date = addHours(action.payload.date, 1).toISOString();
       return {
         ...state,
         foodEntries: [...state.foodEntries].sort(

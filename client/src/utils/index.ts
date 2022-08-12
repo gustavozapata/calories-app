@@ -93,6 +93,12 @@ export const renderDate = (date: string, slice: number) => {
   return newDate.toLocaleString().slice(0, slice);
 };
 
+export const addHours = (date: Date, hours: number) => {
+  const newDate = new Date(date);
+  newDate.setHours(newDate.getHours() + hours);
+  return newDate;
+};
+
 export const calcAverage = (arr: Food[]) => {
   return (
     arr.reduce((acc: number, entry: any) => {
