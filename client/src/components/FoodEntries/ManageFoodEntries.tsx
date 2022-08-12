@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Food } from "../../@types/food";
 import AppContext from "../../context";
-import { groupEntriesByUser } from "../../utils";
+import { groupEntriesByUser, renderDate } from "../../utils";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import FoodForm from "../FoodForm/FoodForm";
 import Modal from "../Modal/Modal";
@@ -83,9 +83,7 @@ const ManageFoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
                     </td>
                     <td className="food-row">{entry.name}</td>
                     <td>{entry.calories}</td>
-                    <td>
-                      {new Date(entry.date).toLocaleString().slice(0, -3)}
-                    </td>
+                    <td>{renderDate(entry.date, -3)}</td>
                     <td className="actions-row">
                       <span
                         className="actions-edit"
@@ -131,8 +129,8 @@ const ManageFoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
             caloriesValue={manageAction === "edit" ? entry.caloriesValue : ""}
             dateValue={
               manageAction === "edit"
-                ? new Date(entry.dateValue).toISOString().slice(0, 16)
-                : new Date().toISOString().slice(0, 16)
+                ? renderDate(entry.dateValue, 16)
+                : renderDate(new Date().toISOString(), 16)
             }
           />
         </Modal>

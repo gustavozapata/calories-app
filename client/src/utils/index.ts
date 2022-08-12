@@ -60,7 +60,7 @@ export const isBetweenDates = (entry: Food, weekPast: number) => {
 };
 
 export const groupEntriesByDay = (entries: Food[]) => {
-  const groupedEntries = entries.reduce((acc: any, entry) => {
+  const groupedEntries = entries.reduce((acc: any, entry: Food) => {
     const date = entry.date.split("T")[0];
     if (!acc[date]) {
       acc[date] = [];
@@ -77,6 +77,20 @@ export const dateToString = (date: Date) => {
     month: "long",
     day: "numeric",
   });
+};
+
+export const renderDate = (date: string, slice: number) => {
+  let newDate = new Date(date);
+  if (slice === 16) {
+    newDate.setTime(
+      newDate.getTime() - new Date().getTimezoneOffset() * 60 * 1000
+    );
+    return newDate.toISOString().slice(0, slice);
+  }
+  newDate.setTime(
+    newDate.getTime() + new Date().getTimezoneOffset() * 60 * 1000
+  );
+  return newDate.toLocaleString().slice(0, slice);
 };
 
 export const calcAverage = (arr: Food[]) => {

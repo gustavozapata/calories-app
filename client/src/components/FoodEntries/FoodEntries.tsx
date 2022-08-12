@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Food } from "../../@types/food";
 import AppContext from "../../context";
-import { groupEntriesByDay } from "../../utils";
+import { groupEntriesByDay, renderDate } from "../../utils";
 import "./FoodEntries.css";
 
 export interface FoodEntriesProps {
@@ -29,9 +29,15 @@ const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
   };
 
   const parseEntries = (entriesByDay: any) => {
-    const parsedValues = Object.keys(entriesByDay).map((entry: any) => {
+    const parsedValues = Object.keys(entriesByDay).map((entry: string) => {
       if (calculateCalorieLimit(entriesByDay[entry]) > user.calorieLimit) {
-        entriesByDay[entry][0].overCalorieLimit = "Yes";
+        entriesByDay[entry].forEach((ent: FoodEntriesByDay, index: number) => {
+          if (index === 0) {
+            ent.overCalorieLimit = "Yes";
+          } else {
+            ent.overCalorieLimit = "";
+          }
+        });
       } else {
         entriesByDay[entry][0].overCalorieLimit = "No";
       }
@@ -42,7 +48,7 @@ const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
 
   const calculateCalorieLimit = (entriesByDay: any) => {
     let totalCalories = 0;
-    totalCalories += entriesByDay.reduce((acc: any, entry: any) => {
+    totalCalories += entriesByDay.reduce((acc: number, entry: Food) => {
       return acc + entry.calories;
     }, 0);
     return totalCalories;
@@ -52,7 +58,7 @@ const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
     <tr key={entry._id}>
       <td>{entry.name}</td>
       <td>{entry.calories}</td>
-      <td>{new Date(entry.date).toLocaleString().slice(0, -3)}</td>
+      <td>{renderDate(entry.date, -3)}</td>
       <td>{entry.overCalorieLimit}</td>
     </tr>
   );

@@ -150,7 +150,9 @@ const appReducer = (
       state.foodEntries[index] = action.payload;
       return {
         ...state,
-        foodEntries: [...state.foodEntries],
+        foodEntries: [...state.foodEntries].sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        ),
       };
     case "deleteFoodEntry":
       return {
