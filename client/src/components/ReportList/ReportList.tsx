@@ -61,7 +61,7 @@ const ReportList: React.FC<ReportListProps> = ({ entries }) => {
         user: report.user,
         recentEntries: report.entries.length,
         recentAvgCalories:
-          calcAverage(report.lastEntriesArray) / report.entries.length,
+          report.entries.length > 0 ? calcAverage(report.entries) : 0,
 
         lastEntries: report.lastEntriesArray.length,
         lastAvgCalories:

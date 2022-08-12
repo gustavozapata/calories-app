@@ -1,5 +1,4 @@
 import { Food } from "../@types/food";
-import { User } from "../@types/user";
 
 export const groupEntriesByUser = (entries: Food[]) => {
   const groups: {
@@ -7,34 +6,15 @@ export const groupEntriesByUser = (entries: Food[]) => {
     entries: Food[];
   }[] = [];
   entries.forEach((entry) => {
-    if (entry.users) {
-      entry.users.forEach((user: User) => {
-        groups.push({
-          user: user.name as string,
-          entries: [
-            {
-              name: "",
-              calories: "",
-              date: "",
-              user: {
-                _id: user._id,
-                name: user.name,
-              },
-            },
-          ],
-        });
+    if (!groups.find((group) => group.user === entry.user?.name)) {
+      groups.push({
+        user: entry.user?.name as string,
+        entries: [entry],
       });
     } else {
-      if (!groups.find((group) => group.user === entry.user?.name)) {
-        groups.push({
-          user: entry.user?.name as string,
-          entries: [entry],
-        });
-      } else {
-        groups
-          .find((group) => group.user === entry.user?.name)
-          ?.entries.push(entry);
-      }
+      groups
+        .find((group) => group.user === entry.user?.name)
+        ?.entries.push(entry);
     }
   });
   return groups;
