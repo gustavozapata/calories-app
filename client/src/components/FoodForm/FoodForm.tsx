@@ -3,6 +3,7 @@ import { Food, NutritionixFood } from "../../@types/food";
 import AppContext from "../../context";
 import { nutritionix_url } from "../../services";
 import { axiosNutritionix } from "../../services";
+import { renderDate } from "../../utils";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
 import Suggestions from "../Suggestions/Suggestions";
@@ -31,12 +32,12 @@ const FoodForm: React.FC<FoodFormProps> = ({
   foodId,
   foodValue = "",
   caloriesValue = "",
-  dateValue = new Date().toISOString().slice(0, 16),
+  dateValue = renderDate(new Date().toISOString(), 16),
 }) => {
   const [food, setFood] = useState(foodValue);
   const [calories, setCalories] = useState(caloriesValue);
   const [date, setDate] = useState(dateValue);
-  const [suggestions, setSuggestions] = useState<any>([]);
+  const [suggestions, setSuggestions] = useState<Array<NutritionixFood>>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const { user } = useContext(AppContext);
 
@@ -61,7 +62,6 @@ const FoodForm: React.FC<FoodFormProps> = ({
       `${nutritionix_url}/natural/nutrients?query=${foodName}`,
       { query: foodName }
     );
-    console.log(foodCalories.data);
     setCalories(foodCalories.data.foods[0].nf_calories);
   };
 
