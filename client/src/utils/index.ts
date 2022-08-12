@@ -66,6 +66,7 @@ export const getDatesForWeek = (weekPast: number) => {
 };
 
 export const isBetweenDates = (entry: Food, weekPast: number) => {
+  let date = new Date(entry.date).toISOString().split("T")[0];
   const dateTo = new Date();
   const dateFrom = new Date();
   const from = new Date(dateFrom.setDate(dateFrom.getDate() - weekPast * 7));
@@ -73,10 +74,7 @@ export const isBetweenDates = (entry: Food, weekPast: number) => {
     weekPast === 1
       ? dateTo
       : new Date(dateTo.setDate(dateTo.getDate() - weekPast * 7 + 7));
-  const entryDate = new Date(entry.date);
-  return (
-    entryDate.getTime() >= from.getTime() && entryDate.getTime() <= to.getTime()
-  );
+  return new Date(date) >= new Date(from) && new Date(date) <= new Date(to);
 };
 
 export const groupEntriesByDay = (entries: Food[]) => {
