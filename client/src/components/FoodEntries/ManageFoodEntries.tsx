@@ -129,7 +129,7 @@ const ManageFoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
             caloriesValue={manageAction === "edit" ? entry.caloriesValue : ""}
             dateValue={
               manageAction === "edit"
-                ? renderDate(entry.dateValue, 16)
+                ? new Date(entry.dateValue).toISOString().slice(0, 16)
                 : renderDate(new Date().toISOString(), 16)
             }
           />
