@@ -48,21 +48,29 @@ const FoodForm: React.FC<FoodFormProps> = ({
   }, [food]);
 
   const handleApiGetFood = async (query: string) => {
-    const foodItems = await axiosNutritionix.get(
-      `${nutritionix_url}/search/instant?query=${query}`
-    );
-    setSuggestions([
-      ...foodItems.data.common.slice(0, ITEMS_TO_SHOW),
-      ...foodItems.data.branded.slice(0, ITEMS_TO_SHOW),
-    ]);
+    try {
+      const foodItems = await axiosNutritionix.get(
+        `${nutritionix_url}/search/instant?query=${query}`
+      );
+      setSuggestions([
+        ...foodItems.data.common.slice(0, ITEMS_TO_SHOW),
+        ...foodItems.data.branded.slice(0, ITEMS_TO_SHOW),
+      ]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getFoodCalories = async (foodName: string) => {
-    const foodCalories = await axiosNutritionix.post(
-      `${nutritionix_url}/natural/nutrients?query=${foodName}`,
-      { query: foodName }
-    );
-    setCalories(foodCalories.data.foods[0].nf_calories);
+    try {
+      const foodCalories = await axiosNutritionix.post(
+        `${nutritionix_url}/natural/nutrients?query=${foodName}`,
+        { query: foodName }
+      );
+      setCalories(foodCalories.data.foods[0].nf_calories);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSelect = (item: NutritionixFood) => {
