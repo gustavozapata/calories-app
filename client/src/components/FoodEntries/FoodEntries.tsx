@@ -39,7 +39,13 @@ const FoodEntries: React.FC<FoodEntriesProps> = ({ entries }) => {
           }
         });
       } else {
-        entriesByDay[entry][0].overCalorieLimit = "No";
+        entriesByDay[entry].forEach((ent: FoodEntriesByDay, index: number) => {
+          if (index === 0) {
+            ent.overCalorieLimit = "No";
+          } else {
+            ent.overCalorieLimit = "";
+          }
+        });
       }
       return entriesByDay[entry];
     });
